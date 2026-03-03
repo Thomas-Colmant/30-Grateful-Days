@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Gratisfied - My Month of Gratitude</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Work+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', -apple-system, sans-serif;
+            background: linear-gradient(to bottom, #f5f1ed 0%, #faf7f4 50%, #f0ebe6 100%);
+            min-height: 100vh;
+            padding: 80px 20px;
+            color: #2c2c2c;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .header h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3.5em;
+            font-weight: 300;
+            color: #2c2c2c;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: #6b6b6b;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .entry {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInEntry 0.8s ease forwards;
+        }
+
+        .entry:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .entry:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .entry:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .entry:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .entry:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInEntry {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .entry.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .photo-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .photo-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .photo-container:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .text-container {
+            flex: 1;
+            padding: 0;
+        }
+
+        .day-number {
+            font-size: 0.85em;
+            font-weight: 500;
+            color: #b8856a;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            padding-top: 12px;
+            border-top: 1px solid #d4c4b8;
+            display: inline-block;
+            padding-right: 20px;
+        }
+
+        .text-container h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.2em;
+            font-weight: 400;
+            color: #2c2c2c;
+            margin-bottom: 18px;
+            line-height: 1.2;
+            transition: color 0.3s ease;
+        }
+
+        .entry:hover .text-container h2 {
+            color: #8b6f5c;
+        }
+
+        .text-container p {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #5a5a5a;
+            font-weight: 400;
+        }
+
+        /* ── Timeline verticale ── */
+        .timeline-wrapper {
+            position: relative;
+        }
+
+        /* Ligne de fond (grise) */
+        .timeline-track {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(180, 160, 145, 0.2);
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ligne de progression (colorée) */
+        .timeline-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to bottom, #b8856a, #8b6f5c);
+            transition: height 0.1s linear;
+            border-radius: 2px;
+        }
+
+        /* Point sur chaque entrée */
+        .entry {
+            position: relative;
+            z-index: 1;
+        }
+
+        .entry::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #b8856a;
+            border: 2px solid #f5f1ed;
+            box-shadow: 0 0 0 3px rgba(184, 133, 106, 0.25);
+            z-index: 2;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .entry.reached::before {
+            background: #8b6f5c;
+            transform: translate(-50%, -50%) scale(1.4);
+            box-shadow: 0 0 0 5px rgba(139, 111, 92, 0.2);
+        }
+
+        @media (max-width: 968px) {
+
+            .entry,
+            .entry.reverse {
+                flex-direction: column;
+                gap: 35px;
+                margin-bottom: 80px;
+            }
+
+            /* Cacher la timeline sur mobile (layout colonne) */
+            .timeline-track {
+                display: none;
+            }
+
+            .entry::before {
+                display: none;
+            }
+
+            .header {
+                margin-bottom: 60px;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .photo-container img {
+                height: 320px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 50px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .text-container h2 {
+                font-size: 1.7em;
+            }
+
+            .photo-container img {
+                height: 260px;
+            }
+
+            .entry {
+                gap: 30px;
+                margin-bottom: 60px;
+            }
+        }
+
+        /* ── Section conclusion ── */
+        .conclusion {
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .conclusion-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, #b8856a, transparent);
+            margin: 0 auto 30px;
+        }
+
+        .conclusion-label {
+            font-size: 0.8em;
+            font-weight: 500;
+            color: #b8856a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .conclusion-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3.5em;
+            font-weight: 300;
+            color: #2c2c2c;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .conclusion-text {
+            font-size: 1.05em;
+            color: #8a8a8a;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        @media (max-width: 480px) {
+            .conclusion-title {
+                font-size: 2.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>30 Grateful Days</h1>
+        <p>My month of gratitude – one photo and one reason per day</p>
+    </header>
+
+    <main class="container">
+        <div class="timeline-wrapper">
+            <div class="timeline-track">
+                <div class="timeline-fill" id="timelineFill"></div>
+            </div>
+            <!-- Day 1 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/IMG_2237.jpg" alt="Day 1">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 1</div>
+                    <h2>Expanding Horizons</h2>
+                    <p>Grateful for these fictional journeys that offer new perspectives on our own reality and the
+                        world
+                        around us.</p>
+                </div>
+            </article>
+
+            <!-- Day 2 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/IMG_2194.jpg" alt="Day 2">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 2</div>
+                    <h2>Creative Collaboration</h2>
+                    <p>Grateful for the moments spent creating with others, where ideas come to life and teamwork makes
+                        every project fun and memorable.</p>
+                </div>
+            </article>
+
+            <!-- Day 3 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/IMG_2177.jpg" alt="Day 3">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 3</div>
+                    <h2>Learning photography</h2>
+                    <p>Grateful for the process of learning and improving my photography skills, capturing the world
+                        through a new lens.</p>
+                </div>
+            </article>
+
+            <!-- Day 4 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/jjk1.jpg" alt="Day 4">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 4</div>
+                    <h2>Jujutsu Kaisen</h2>
+                    <p>Grateful for this anime that moves me deeply, with its powerful storytelling and unforgettable
+                        moments that stay with me.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Day 5 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/arras.jpg" alt="Day 5">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 5</div>
+                    <h2>City Lights and Good Times</h2>
+                    <p>I am grateful for these bright moments in the city. They remind me to appreciate the fun times
+                        and
+                        the memories I share with my friends.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Day 6 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/bella.png" alt="Day 6">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 6</div>
+                    <h2>My Faithful Companion</h2>
+                    <p>I am grateful for my dog's presence; being by his side always makes me feel good.</p>
+                </div>
+            </article>
+
+            <!-- Day 7 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/DSC02353.jpg" alt="Day 7">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 7</div>
+                    <h2>A Perfect Match</h2>
+                    <p>I am grateful for a perfect match. Winning 3-0 is always satisfying because it proves that my
+                        strategy is better than the rest.</p>
+                </div>
+            </article>
+
+            <!-- Day 8 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/frieiren.jpg" alt="Day 8">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 8</div>
+                    <h2>The Value of Time</h2>
+                    <p>I am grateful for this story because it teaches me to cherish every moment with the people I care
+                        about. It’s a reminder that time is precious and we should never take it for granted.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Day 9 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/yaourts.jpg" alt="Day 9">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 9</div>
+                    <h2>Small Treats</h2>
+                    <p>TI am grateful for the simple pleasure of a good yogurt.</p>
+                </div>
+            </article>
+
+            <!-- Day 10 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/IMG_2204.jpg" alt="Day 10">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 10</div>
+                    <h2>Photography Skills</h2>
+                    <p>Grateful for the opportunity to develop my photography skills, master different settings, and
+                        grow as
+                        a photographer.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Day 11 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/jjk2.jpg" alt="Day 11">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 11</div>
+                    <h2>Jujutsu Kaisen - Maki's Episode</h2>
+                    <p>Grateful for the masterpiece that is Maki's episode in JJK, with its exceptional animation and
+                        storytelling that left me speechless.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Day 12 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/for honor.jpg" alt="Day 12">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 12</div>
+                    <h2>A Journey Through Time</h2>
+                    <p>I am grateful for video games that let me immerse myself in another era. It’s a unique way to
+                        experience the atmosphere of the past and live epic battles.</p>
+                </div>
+            </article>
+
+            <!-- Day 13 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/younes.jpg" alt="Day 13">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 13</div>
+                    <h2>Shared Moments</h2>
+                    <p>I am grateful for the long conversations and the laughter we share online. These moments remind
+                        me of the importance of having a community, even in a digital space.</p>
+                </div>
+            </article>
+
+            <!-- Day 14 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/nuit_terril.jpg" alt="Day 14">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 14</div>
+                    <h2>A Rewarding View</h2>
+                    <p>I am grateful for the climb that led to this view. It shows me that the best perspectives are
+                        often earned through effort and patience.</p>
+                </div>
+            </article>
+
+            <!-- Day 15 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/ronaldo.jpg" alt="Day 15">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 15</div>
+                    <h2>Inspired by Greatness</h2>
+                    <p>I am grateful for the figures who exemplify hard work and dedication; they prove that with enough
+                        passion, even the boldest dreams can become a reality.</p>
+                </div>
+            </article>
+
+            <!-- Day 16 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/casadelpaple.jpg" alt="Day 16">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 16</div>
+                    <h2>The Power of Strategy</h2>
+                    <p>I am grateful for stories that celebrate intelligence and careful planning. It reminds me that
+                        even the most difficult challenges can be overcome with a clear mind and a good strategy</p>
+                </div>
+            </article>
+
+            <!-- Day 17 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/younes noah comm photo.jpg" alt="Day 17">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 17</div>
+                    <h2>Teamwork and Laughter</h2>
+                    <p>I am grateful for my classmates. Even when we are working seriously on an assignment, we always
+                        find a way to enjoy the moment and laugh together.</p>
+                </div>
+            </article>
+
+            <!-- Day 18 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/voiture.jpg" alt="Day 18">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 18</div>
+                    <h2>Roads to Freedom</h2>
+                    <p>I am grateful for my car and the freedom it gives me. It’s more than just a ride; it’s my way to
+                        explore, travel, and reach new places whenever I want.</p>
+                </div>
+            </article>
+
+            <!-- Day 19 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/manga.jpg" alt="Day 19">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 19</div>
+                    <h2>Beyond Appearances</h2>
+                    <p>I am grateful for this story as it serves as a reminder not to judge by appearances. It
+                        highlights the importance of being true to oneself and staying loyal to friends, regardless of
+                        what others think.</p>
+                </div>
+            </article>
+
+            <!-- Day 20 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/nausica.jpg" alt="Day 20">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 20</div>
+                    <h2>Hidden Worlds</h2>
+                    <p>I am grateful for this glimpse into the ocean. It reminds me that there is an entire world
+                        beneath the surface that we often forget, and it deserves our respect and protection.</p>
+                </div>
+            </article>
+
+            <!-- Day 21 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/eglise.jpg" alt="Day 21">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 21</div>
+                    <h2>A Moment of Stillness</h2>
+                    <p>I am grateful for the quiet atmosphere of this place. It's a reminder to take a break from the
+                        noise of the world and find peace in silence and reflection.</p>
+                </div>
+            </article>
+
+            <!-- Day 22 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/SORTIR.png" alt="Day 22">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 22</div>
+                    <h2>Time to Breathe</h2>
+                    <p>I am grateful for the time I have to step outside and explore. Taking photos is my way of
+                        enjoying
+                        the fresh air and the freedom of being away from the daily routine.</p>
+                </div>
+            </article>
+
+            <!-- Day 23 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/audiovisuel.jpg" alt="Day 23">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 23</div>
+                    <h2>Creative Focus</h2>
+                    <p>I am grateful for the hobbies that give me purpose. Having my gear by my side reminds me to
+                        always
+                        stay curious and observant.</p>
+                </div>
+            </article>
+
+            <!-- Day 24 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/lego.jpg" alt="Day 24">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 24</div>
+                    <h2>Constructing Happiness</h2>
+                    <p>I am grateful for the reminder that happiness is built piece by piece. Just like these blocks, we
+                        have the power to assemble our own joy, one small step at a time.</p>
+                </div>
+            </article>
+
+            <!-- Day 25 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/repas de famille.jpg" alt="Day 25">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 25</div>
+                    <h2>Family Bonds</h2>
+                    <p>I am grateful for these moments spent with my family. Sharing a meal is the best way to stay
+                        connected and create lasting memories together.</p>
+                </div>
+            </article>
+
+            <!-- Day 26 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="" alt="Day 26">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 26</div>
+                    <h2>Inner Peace</h2>
+                    <p>Those moments of serenity when I feel in harmony with myself and the world.</p>
+                </div>
+            </article>
+
+            <!-- Day 27 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/bain.jpg" alt="Day 27">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 27</div>
+                    <h2>Pure Relaxation</h2>
+                    <p>I am grateful for these quiet moments. A warm bath is the perfect way to relax my mind and body
+                        after a long and busy day.</p>
+                </div>
+            </article>
+
+            <!-- Day 28 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/musqiue.png" alt="Day 28" style="object-position: center 60%;">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 28</div>
+                    <h2>Emotional Harmony</h2>
+                    <p>I am grateful for the power of a good song to change my mood and connect me to a feeling or a
+                        memory instantly.</p>
+                </div>
+            </article>
+
+            <!-- Day 29 - Photo on left -->
+            <article class="entry">
+                <div class="photo-container">
+                    <img src="photos anglais/neige 1.jpg" alt="Day 29">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 29</div>
+                    <h2>Mountain Serenity</h2>
+                    <p>I am grateful for these mountains; their silent strength helps me forget my daily worries and
+                        find
+                        peace in the vastness of the landscape.</p>
+                </div>
+            </article>
+
+            <!-- Day 30 - Photo on right -->
+            <article class="entry reverse">
+                <div class="photo-container">
+                    <img src="photos anglais/neige 2.jpg" alt="Day 30">
+                </div>
+                <div class="text-container">
+                    <div class="day-number">Day 30</div>
+                    <h2>Infinite Horizons</h2>
+                    <p>Grateful for the feeling of absolute freedom that only a wide, open horizon can provide.</p>
+                </div>
+            </article>
+        </div><!-- /.timeline-wrapper -->
+
+        <!-- Conclusion -->
+        <div class="conclusion">
+            <div class="conclusion-line"></div>
+            <p class="conclusion-label">30 days · 30 reasons</p>
+            <h2 class="conclusion-title">These were my<br>30 Grateful Days.</h2>
+            <p class="conclusion-text">One photo, one reason, every single day.<br>Gratitude changes the way you see
+                the world.</p>
+        </div>
+    </main>
+
+    <script>
+        const fill = document.getElementById('timelineFill');
+        const wrapper = document.querySelector('.timeline-wrapper');
+        const entries = document.querySelectorAll('.entry');
+
+        function updateTimeline() {
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const wrapperTop = wrapperRect.top + window.scrollY;
+            const wrapperHeight = wrapper.offsetHeight;
+
+            // Progression : de 0% (haut du wrapper) à 100% (bas du wrapper)
+            const scrolled = window.scrollY + window.innerHeight * 0.6 - wrapperTop;
+            const percent = Math.min(100, Math.max(0, (scrolled / wrapperHeight) * 100));
+            fill.style.height = percent + '%';
+
+            // Allumer les points des entrées atteintes
+            entries.forEach(entry => {
+                const entryMid = entry.getBoundingClientRect().top + entry.offsetHeight / 2;
+                if (entryMid < window.innerHeight * 0.65) {
+                    entry.classList.add('reached');
+                } else {
+                    entry.classList.remove('reached');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateTimeline, { passive: true });
+        updateTimeline();
+    </script>
+</body>
+
+</html>
